@@ -42,29 +42,7 @@ export function computeContainerDefinition(
     const region = utils.getRegion(parent);
 
     const logGroupId = logGroup ? logGroup.id : undefined;
-    const containerDefinition = pulumi.all([container, logGroupId, image, environment, portMappings, region])
-        .apply(([container, logGroupId, image, environment, portMappings, region]) => {
-            const containerDefinition: aws.ecs.ContainerDefinition = {
-                ...container,
-                image,
-                environment,
-                portMappings,
-                name: containerName,
-            };
-
-            if (containerDefinition.logConfiguration === undefined && logGroupId !== undefined) {
-                containerDefinition.logConfiguration = {
-                    logDriver: "awslogs",
-                    options: {
-                        "awslogs-group": logGroupId,
-                        "awslogs-region": region,
-                        "awslogs-stream-prefix": containerName,
-                    },
-                };
-            }
-
-            return containerDefinition;
-        });
+    const containerDefinition: pulumi.Output<aws.ecs.ContainerDefinition> = undefined!;
 
     return containerDefinition;
 }

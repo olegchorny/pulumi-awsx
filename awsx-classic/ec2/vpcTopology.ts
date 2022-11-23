@@ -282,22 +282,23 @@ ${lastAllocatedIpAddress} > ${lastVpcIpAddress}`);
 "Must set [assignGeneratedIpv6CidrBlock] to true on [Vpc] in order to assign ipv6 address to subnet.", this.resource);
                 }
 
-                // Should be of the form: 2600:1f16:110:2600::/56
-                const colonColonIndex = vpcIpv6CidrBlock.indexOf("::");
-                if (colonColonIndex < 0 ||
-                    vpcIpv6CidrBlock.substr(colonColonIndex) !== "::/56") {
+                // // Should be of the form: 2600:1f16:110:2600::/56
+                // const colonColonIndex = vpcIpv6CidrBlock.indexOf("::");
+                // if (colonColonIndex < 0 ||
+                //     vpcIpv6CidrBlock.substr(colonColonIndex) !== "::/56") {
 
-                    throw new pulumi.ResourceError(`Vpc ipv6 cidr block was not in an expected form: ${vpcIpv6CidrBlock}`, this.resource);
-                }
+                //     throw new pulumi.ResourceError(`Vpc ipv6 cidr block was not in an expected form: ${vpcIpv6CidrBlock}`, this.resource);
+                // }
 
-                const header = vpcIpv6CidrBlock.substr(0, colonColonIndex);
-                if (!header.endsWith("00")) {
-                    throw new pulumi.ResourceError(`Vpc ipv6 cidr block was not in an expected form: ${vpcIpv6CidrBlock}`, this.resource);
-                }
+                // const header = vpcIpv6CidrBlock.substr(0, colonColonIndex);
+                // if (!header.endsWith("00")) {
+                //     throw new pulumi.ResourceError(`Vpc ipv6 cidr block was not in an expected form: ${vpcIpv6CidrBlock}`, this.resource);
+                // }
 
-                // trim off the 00, and then add 00, 01, 02, 03, etc.
-                const prefix = header.substr(0, header.length - 2);
-                return prefix + index.toString().padStart(2, "0") + "::/64";
+                // // trim off the 00, and then add 00, 01, 02, 03, etc.
+                // const prefix = header.substr(0, header.length - 2);
+                // return prefix + index.toString().padStart(2, "0") + "::/64";
+                return "";
              });
 
         return <pulumi.Output<string>>result;
